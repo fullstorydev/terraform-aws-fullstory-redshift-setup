@@ -11,14 +11,12 @@ resource "aws_redshift_cluster" "main" {
 module "fullstory_redshift_setup" {
   source = "fullstorydev/fullstory-redshift-setup/aws"
 
-  vpc_id          = "my-vpc-id"
-  cluster_arn     = aws_redshift_cluster.main.arn
-  fullstory_realm = "NA1" # If your Fullstory account is hosted in the EU, set this to "EU1".
-}
+  vpc_id             = "my-vpc-id"
+  database_arn       = "arn:aws:redshift:${local.region}:${local.account_id}:dbname:${aws_redshift_cluster.main.cluster_identifier}/${aws_redshift_cluster.main.database_name}"
+  cluster_identifier = aws_redshift_cluster.main.cluster_identifier
+  port               = aws_redshift_cluster.main.port
+  fullstory_realm    = "NA1" # If your Fullstory account is hosted in the EU, set this to "EU1".
 
-output "fullstory_s3_bucket_name" {
-  value       = module.fullstory_redshift_setup.s3_bucket_name
-  description = "The name of the bucket that should be entered when setting up this destination in Fullstory."
 }
 
 output "fullstory_role_arn" {
