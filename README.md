@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-# terraform-aws-fullstory-redshift-setup
-=======
 <a href="https://fullstory.com"><img src="https://github.com/fullstorydev/terraform-aws-fullstory-redshift-setup/blob/main/assets/fs-logo.png?raw=true"></a>
 
 # terraform-aws-fullstory-redshift-setup
@@ -8,6 +5,8 @@
 [![GitHub release](https://img.shields.io/github/release/fullstorydev/terraform-aws-fullstory-redshift-setup.svg)](https://github.com/fullstorydev/terraform-aws-fullstory-redshift-setup/releases/)
 
 This module creates all the proper policies, roles and S3 buckets so that Fullstory can connect to the Redshift Cluster or Workgroup and load data. For more information checkout [this KB article](https://help.fullstory.com/hc/en-us/articles/18791516308887-Amazon-Redshift).
+
+**This module does not** create the permissions in your database that are required for Fullstory to create schemas. See [this guide](https://help.fullstory.com/hc/en-us/articles/18791516308887-Amazon-Redshift#h_01HNGMBXC344AM02MR35QFZJ2T) for instructions on how to grant your IAM role the correct permissions on your database objects.
 
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
@@ -120,4 +119,3 @@ Alternatively, you can view all the configuration information inside the AWS con
 ## Contributing
 
 See [CONTRIBUTING.md](https://github.com/fullstorydev/terraform-aws-fullstory-aws-setup/blob/main/.github/CONTRIBUTING.md) for best practices and instructions on setting up your dev environment.
->>>>>>> 333d1c9 (feat: initial terraform)
