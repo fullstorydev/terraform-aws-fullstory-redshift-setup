@@ -23,6 +23,11 @@ variable "fullstory_realm" {
   }
 }
 
+variable "s3_bucket_name" {
+  type        = string
+  description = "The name of the S3 bucket where the Fullstory bundles are stored."
+}
+
 variable "vpc_id" {
   type        = string
   description = "The VPC ID where the Redshift cluster or Redshift Serverless workgroup is deployed."
@@ -33,3 +38,4 @@ variable "workgroup_arn" {
   description = "The ARN of the Redshift Serverless workgroup. Required if you are using Redshift Serverless."
   default     = ""
 }
+

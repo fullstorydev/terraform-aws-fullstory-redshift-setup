@@ -63,13 +63,8 @@ resource "aws_iam_role" "main" {
   })
 }
 
-resource "aws_s3_bucket" "main" {
-  # We use bucket prefix here so that we don't run into uniqueness issues.
-  bucket_prefix = "fullstory-redshift-setup-"
-}
-
 resource "aws_s3_bucket_policy" "main" {
-  bucket = aws_s3_bucket.main.bucket
+  bucket = var.s3_bucket_name
 
   policy = jsonencode({
     Version = "2012-10-17"
@@ -88,8 +83,8 @@ resource "aws_s3_bucket_policy" "main" {
           AWS = aws_iam_role.main.arn
         }
         Resource = [
-          "arn:aws:s3:::${aws_s3_bucket.main.bucket}/*",
-          "arn:aws:s3:::${aws_s3_bucket.main.bucket}",
+          "arn:aws:s3:::${var.s3_bucket_name}/*",
+          "arn:aws:s3:::${var.s3_bucket_name}",
         ]
       },
     ]
