@@ -22,7 +22,11 @@ This module creates all the proper policies, roles and S3 buckets so that Fullst
 |------|-------------|------|---------|:--------:|
 | <a name="input_cluster_identifier"></a> [cluster\_identifier](#input\_cluster\_identifier) | The identifier of the Redshift cluster. Required if you are using Redshift provisioned. | `string` | `""` | no |
 | <a name="input_database_arn"></a> [database\_arn](#input\_database\_arn) | The ARN of the database within Redshift cluster. Required if you are using Redshift provisioned. | `string` | `""` | no |
+| <a name="input_fullstory_cidr_ipv4"></a> [fullstory\_cidr\_ipv4](#input\_fullstory\_cidr\_ipv4) | The CIDR block that Fullstory will use to connect to the Redshift cluster. | `string` | `""` | no |
+| <a name="input_fullstory_google_audience"></a> [fullstory\_google\_audience](#input\_fullstory\_google\_audience) | The Google audience identifier that Fullstory will use to assume the role in order to call AWS APIs | `string` | `""` | no |
 | <a name="input_fullstory_realm"></a> [fullstory\_realm](#input\_fullstory\_realm) | The realm where your Fullstory account is hosted. Either 'NA1' or 'EU1'. | `string` | n/a | yes |
+| <a name="input_port"></a> [port](#input\_port) | The port number where the Redshift cluster is listening. | `number` | `5439` | no |
+| <a name="input_s3_bucket_name"></a> [s3\_bucket\_name](#input\_s3\_bucket\_name) | The name of the S3 bucket where the Fullstory bundles are stored. | `string` | n/a | yes |
 | <a name="input_vpc_id"></a> [vpc\_id](#input\_vpc\_id) | The VPC ID where the Redshift cluster or Redshift Serverless workgroup is deployed. | `string` | n/a | yes |
 | <a name="input_workgroup_arn"></a> [workgroup\_arn](#input\_workgroup\_arn) | The ARN of the Redshift Serverless workgroup. Required if you are using Redshift Serverless. | `string` | `""` | no |
 
@@ -31,7 +35,6 @@ This module creates all the proper policies, roles and S3 buckets so that Fullst
 | Name | Description |
 |------|-------------|
 | <a name="output_role_arn"></a> [role\_arn](#output\_role\_arn) | The ARN of the role that Fullstory will use when loading data into Redshift. |
-| <a name="output_s3_bucket_name"></a> [s3\_bucket\_name](#output\_s3\_bucket\_name) | The name of the bucket that Fullstory will use to store Redshift bundles for loading. |
 
 ## Usage
 
