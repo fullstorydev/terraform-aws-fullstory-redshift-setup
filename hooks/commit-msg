@@ -1,0 +1,5 @@
+#!/bin/sh
+# Now process commit message
+msg=$(head -1 $1)
+
+./hooks/commit-msg.py "$msg"

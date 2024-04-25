@@ -1,0 +1,92 @@
+version: 2.1
+
+executors:
+  terraform:
+    docker:
+      - image: cimg/deploy:2023.05
+  node:
+    docker:
+      - image: cimg/node:current
+
+  python:
+    docker:
+      - image: cimg/python:3.11.3
+    
+  tf_docs:
+    docker:
+      - image: quay.io/terraform-docs/terraform-docs:0.17.0
+  
+
+jobs:
+  terraform_check:
+    executor: terraform
+    steps:
+      - checkout
+      - run:
+          step_name: Run Terraform Validate
+          command: |
+            terraform init -backend=false
+            terraform validate
+  
+  terraform_docs:
+    executor: tf_docs
+    steps:
+      - checkout
+      - run:
+          step_name: Verify Terraform Documentation Generation
+          command: |
+            cp README.md /tmp
+            terraform-docs markdown .
+            diff /tmp/README.md README.md
+
+
+  msg_check:
+    executor: python
+    steps:
+      - checkout
+      - run:
+          command: |
+            if [ -z "${CIRCLE_PR_NUMBER}" ]; then
+              MSG="`git log -n 1 --pretty=%s`"
+            else
+              MSG="`curl -s https://api.github.com/repos/${CIRCLE_PR_REPONAME}/pulls/${CIRCLE_PR_NUMBER}|jq .title`"
+              MSG="${${MSG%%\"}##\"}"
+              if [ -z "$MSG" ]; then
+                MSG="`git log -n 1 --pretty=%s`"
+              fi
+            fi
+            
+            hooks/commit-msg.py "$MSG"
+
+  version_bump:
+    executor: node
+    steps:
+        - checkout
+        - run:
+            step_name: Semantic Release
+            command: |
+              eval $(ssh-agent -s)
+              echo $DEPLOY_KEY | base64 -d > /tmp/deploy_key
+              chmod 600 /tmp/deploy_key
+              ssh-add /tmp/deploy_key </dev/null
+              npx semantic-release
+
+
+workflows:
+  pr_test:
+    when: 
+      and:
+      - not: 
+          matches:
+            pattern: "^main$"
+            value: << pipeline.git.branch >>
+    jobs:
+      - terraform_check
+      - msg_check
+      - terraform_docs
+  release:
+    when:
+      and:
+      - equal: [ main, << pipeline.git.branch >> ]
+    jobs:
+      - version_bump
