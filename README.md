@@ -164,7 +164,7 @@ output "fullstory_s3_bucket_name" {
 This module outputs some of the fields required by Fullstory to setup your Redshift connection. In order to view the outputs of this module, the outputs must also be included in your root module, then accessed via the Terraform CLI:
 
 ```bash
-terraform output -raw <name of your output varible > | pbcopy
+terraform output <name of your output varible > | pbcopy
 ```
 
 Alternatively, you can view all the configuration information inside the AWS console.
