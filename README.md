@@ -23,8 +23,8 @@ This module creates all the proper policies, roles and S3 buckets so that Fullst
 | <a name="input_cluster_identifier"></a> [cluster\_identifier](#input\_cluster\_identifier) | The identifier of the Redshift cluster. Required if you are using Redshift provisioned. | `string` | `""` | no |
 | <a name="input_database_arn"></a> [database\_arn](#input\_database\_arn) | The ARN of the database within Redshift cluster. Required if you are using Redshift provisioned. This is not the cluster ARN, see https://docs.aws.amazon.com/redshift/latest/mgmt/generating-iam-credentials-role-permissions.html for more information. | `string` | `""` | no |
 | <a name="input_fullstory_cidr_ipv4"></a> [fullstory\_cidr\_ipv4](#input\_fullstory\_cidr\_ipv4) | The CIDR block that Fullstory will use to connect to the Redshift cluster. | `string` | `""` | no |
+| <a name="input_fullstory_data_center"></a> [fullstory\_data\_center](#input\_fullstory\_data\_center) | The data center where your Fullstory account is hosted. Either 'NA1' or 'EU1'. See https://help.fullstory.com/hc/en-us/articles/8901113940375-Fullstory-Data-Residency for more information. | `string` | `"NA1"` | no |
 | <a name="input_fullstory_google_audience"></a> [fullstory\_google\_audience](#input\_fullstory\_google\_audience) | The Google audience identifier that Fullstory will use to assume the role in order to call AWS APIs | `string` | `""` | no |
-| <a name="input_fullstory_realm"></a> [fullstory\_realm](#input\_fullstory\_realm) | The realm where your Fullstory account is hosted. Either 'NA1' or 'EU1'. | `string` | n/a | yes |
 | <a name="input_port"></a> [port](#input\_port) | The port number where the Redshift cluster is listening. | `number` | `5439` | no |
 | <a name="input_s3_bucket_name"></a> [s3\_bucket\_name](#input\_s3\_bucket\_name) | The name of the S3 bucket where the Fullstory bundles are stored. | `string` | n/a | yes |
 | <a name="input_vpc_id"></a> [vpc\_id](#input\_vpc\_id) | The VPC ID where the Redshift cluster or Redshift Serverless workgroup is deployed. | `string` | n/a | yes |
@@ -65,11 +65,6 @@ module "fullstory_redshift_setup" {
   fullstory_realm = "NA1" # If your Fullstory account is hosted in the EU, set this to "EU1".
 }
 
-output "fullstory_s3_bucket_name" {
-  value       = module.fullstory_redshift_setup.s3_bucket_name
-  description = "The name of the bucket that should be entered when setting up this destination in Fullstory."
-}
-
 output "fullstory_role_arn" {
   value       = module.fullstory_redshift_setup.role_arn
   description = "The role ARN that should be entered when setting up this destination in Fullstory."
@@ -91,14 +86,12 @@ resource "aws_redshift_cluster" "main" {
 module "fullstory_redshift_setup" {
   source = "fullstorydev/fullstory-redshift-setup/aws"
 
-  vpc_id          = "my-vpc-id"
-  cluster_arn     = aws_redshift_cluster.main.arn
-  fullstory_realm = "NA1" # If your Fullstory account is hosted in the EU, set this to "EU1".
-}
+  vpc_id             = "my-vpc-id"
+  database_arn       = "arn:aws:redshift:${local.region}:${local.account_id}:dbname:${aws_redshift_cluster.main.cluster_identifier}/${aws_redshift_cluster.main.database_name}"
+  cluster_identifier = aws_redshift_cluster.main.cluster_identifier
+  port               = aws_redshift_cluster.main.port
+  fullstory_realm    = "NA1" # If your Fullstory account is hosted in the EU, set this to "EU1".
 
-output "fullstory_s3_bucket_name" {
-  value       = module.fullstory_redshift_setup.s3_bucket_name
-  description = "The name of the bucket that should be entered when setting up this destination in Fullstory."
 }
 
 output "fullstory_role_arn" {

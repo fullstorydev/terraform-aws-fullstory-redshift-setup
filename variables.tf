@@ -26,12 +26,13 @@ variable "fullstory_google_audience" {
   default     = ""
 }
 
-variable "fullstory_realm" {
+variable "fullstory_data_center" {
   type        = string
-  description = "The realm where your Fullstory account is hosted. Either 'NA1' or 'EU1'."
+  description = "The data center where your Fullstory account is hosted. Either 'NA1' or 'EU1'. See https://help.fullstory.com/hc/en-us/articles/8901113940375-Fullstory-Data-Residency for more information."
+  default     = "NA1"
   validation {
-    condition     = var.fullstory_realm == "NA1" || var.fullstory_realm == "EU1"
-    error_message = "The realm must be either 'NA1' or 'EU1'."
+    condition     = var.fullstory_data_center == "NA1" || var.fullstory_data_center == "EU1"
+    error_message = "The data center must be either 'NA1' or 'EU1'."
   }
 }
 
