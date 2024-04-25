@@ -23,6 +23,12 @@ variable "fullstory_realm" {
   }
 }
 
+variable "port" {
+  type        = number
+  description = "The port number where the Redshift cluster is listening."
+  default     = 5439
+}
+
 variable "s3_bucket_name" {
   type        = string
   description = "The name of the S3 bucket where the Fullstory bundles are stored."

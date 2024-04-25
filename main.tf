@@ -20,18 +20,8 @@ resource "aws_vpc_security_group_ingress_rule" "allow_fullstory_ips_0" {
   ip_protocol       = "tcp"
 
   # https://docs.aws.amazon.com/redshift/latest/mgmt/serverless-connecting.html
-  from_port = 5431
-  to_port   = 5455
-}
-
-resource "aws_vpc_security_group_ingress_rule" "allow_fullstory_ips_1" {
-  security_group_id = aws_security_group.allow_fullstory_ips.id
-  cidr_ipv4         = local.fullstory_cidr_ipv4
-  ip_protocol       = "tcp"
-
-  # https://docs.aws.amazon.com/redshift/latest/mgmt/serverless-connecting.html
-  from_port = 8191
-  to_port   = 8215
+  from_port = var.port
+  to_port   = var.port
 }
 
 resource "aws_iam_role" "main" {
@@ -47,8 +37,7 @@ resource "aws_iam_role" "main" {
         },
         Condition = {
           StringEquals = {
-            # "accounts.google.com:aud" = local.fullstory_google_audience
-            "accounts.google.com:aud" = "116623030858962667063"
+            "accounts.google.com:aud" = local.fullstory_google_audience
           }
         }
       },
