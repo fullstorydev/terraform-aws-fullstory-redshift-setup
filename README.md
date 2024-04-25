@@ -21,7 +21,7 @@ This module creates all the proper policies, roles and S3 buckets so that Fullst
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_cluster_identifier"></a> [cluster\_identifier](#input\_cluster\_identifier) | The identifier of the Redshift cluster. Required if you are using Redshift provisioned. | `string` | `""` | no |
-| <a name="input_database_arn"></a> [database\_arn](#input\_database\_arn) | The ARN of the database within Redshift cluster. Required if you are using Redshift provisioned. | `string` | `""` | no |
+| <a name="input_database_arn"></a> [database\_arn](#input\_database\_arn) | The ARN of the database within Redshift cluster. Required if you are using Redshift provisioned. This is not the cluster ARN, see https://docs.aws.amazon.com/redshift/latest/mgmt/generating-iam-credentials-role-permissions.html for more information. | `string` | `""` | no |
 | <a name="input_fullstory_cidr_ipv4"></a> [fullstory\_cidr\_ipv4](#input\_fullstory\_cidr\_ipv4) | The CIDR block that Fullstory will use to connect to the Redshift cluster. | `string` | `""` | no |
 | <a name="input_fullstory_google_audience"></a> [fullstory\_google\_audience](#input\_fullstory\_google\_audience) | The Google audience identifier that Fullstory will use to assume the role in order to call AWS APIs | `string` | `""` | no |
 | <a name="input_fullstory_realm"></a> [fullstory\_realm](#input\_fullstory\_realm) | The realm where your Fullstory account is hosted. Either 'NA1' or 'EU1'. | `string` | n/a | yes |
