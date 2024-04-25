@@ -1,6 +1,6 @@
 locals {
-  fullstory_cidr_ipv4       = var.fullstory_realm == "EU1" ? "34.89.210.80/29" : "8.35.195.0/29"
-  fullstory_google_audience = var.fullstory_realm == "EU1" ? "107589159240321051166" : "116984388253902328461"
+  fullstory_cidr_ipv4       = var.fullstory_cidr_ipv4 != "" ? var.fullstory_cidr_ipv4 : (var.fullstory_realm == "EU1" ? "34.89.210.80/29" : "8.35.195.0/29")
+  fullstory_google_audience = var.fullstory_google_audience != "" ? var.fullstory_google_audience : (var.fullstory_realm == "EU1" ? "107589159240321051166" : "116984388253902328461")
   is_serverless             = var.workgroup_arn != ""
 }
 
