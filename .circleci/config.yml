@@ -3,7 +3,7 @@ version: 2.1
 executors:
   terraform:
     docker:
-      - image: cimg/deploy:2023.05
+      - image: cimg/deploy:2024.03.1
   node:
     docker:
       - image: cimg/node:current
