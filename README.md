@@ -46,7 +46,7 @@ resource "aws_redshiftserverless_namespace" "main" {
 }
 
 resource "aws_redshiftserverless_workgroup" "main" {
-  namespace_name      = resource.aws_redshiftserverless_namespace.main.id
+  namespace_name      = aws_redshiftserverless_namespace.main.id
   workgroup_name      = "my-workgroup"
   publicly_accessible = true # Your workgroup must be publicly accessible to allow Fullstory to access it.
   # This is the minimum capacity for a serverless workgroup. See https://docs.aws.amazon.com/redshift/latest/mgmt/serverless-capacity.html for more details.
@@ -67,7 +67,7 @@ module "fullstory_redshift_setup" {
   vpc_id          = "my-vpc-id"
   workgroup_arn   = aws_redshiftserverless_workgroup.main.arn
   s3_bucket_name  = aws_s3_bucket.main.bucket
-  fullstory_realm = "NA1" # If your Fullstory account is hosted in the EU, set this to "EU1".
+  fullstory_data_center = "NA1" # If your Fullstory account is hosted in the EU, set this to "EU1".
 }
 
 output "fullstory_host" {
