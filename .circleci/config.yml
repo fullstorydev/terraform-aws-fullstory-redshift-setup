@@ -27,6 +27,10 @@ jobs:
           command: |
             terraform init -backend=false
             terraform validate
+      - run:
+          step_name: Run Terraform Test
+          command: terraform test
+
   
   terraform_docs:
     executor: tf_docs

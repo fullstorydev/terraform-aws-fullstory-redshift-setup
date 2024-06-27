@@ -3,7 +3,7 @@ variable "database_arn" {
   description = "The ARN of the database within Redshift cluster. Required if you are using Redshift provisioned. This is not the cluster ARN, see https://docs.aws.amazon.com/redshift/latest/mgmt/generating-iam-credentials-role-permissions.html for more information."
   default     = ""
   validation {
-    condition     = can(regex("arn:aws:redshift:[a-z0-9-]+:.*:dbname:[a-z0-9-]+/.+", var.database_arn))
+    condition     = var.database_arn == "" || can(regex("arn:aws:redshift:[a-z0-9-]+:.*:dbname:[a-z0-9-]+/.+", var.database_arn))
     error_message = "The cluster ARN must include 'dbname' name. Ex. arn:aws:redshift:us-west-2:123456789012:dbname:my-cluster/my-database"
   }
 }
