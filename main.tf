@@ -1,7 +1,6 @@
 locals {
   fullstory_cidr_ipv4s      = length(var.fullstory_cidr_ipv4s) > 0 ? var.fullstory_cidr_ipv4s : (var.fullstory_data_center == "EU1" ? ["34.89.210.80/29"] : ["8.35.195.0/29"])
   fullstory_google_audience = var.fullstory_google_audience != "" ? var.fullstory_google_audience : (var.fullstory_data_center == "EU1" ? "107589159240321051166" : "116984388253902328461")
-  is_serverless             = var.workgroup_arn != ""
 }
 
 data "aws_vpc" "main" {
@@ -80,14 +79,14 @@ resource "aws_s3_bucket_policy" "main" {
 }
 
 module "redshift_serverless" {
-  count         = local.is_serverless ? 1 : 0
+  count         = var.is_serverless ? 1 : 0
   source        = "./modules/serverless"
   workgroup_arn = var.workgroup_arn
   role_name     = aws_iam_role.main.name
 }
 
 module "redshift_provisioned" {
-  count              = local.is_serverless ? 0 : 1
+  count              = var.is_serverless ? 0 : 1
   source             = "./modules/provisioned"
   cluster_identifier = var.cluster_identifier
   database_arn       = var.database_arn

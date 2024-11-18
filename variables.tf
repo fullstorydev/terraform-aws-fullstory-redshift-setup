@@ -36,6 +36,11 @@ variable "fullstory_data_center" {
   }
 }
 
+variable "is_serverless" {
+  type        = bool
+  description = "Whether the Redshift cluster is serverless or not."
+}
+
 variable "port" {
   type        = number
   description = "The port number where the Redshift cluster is listening."
