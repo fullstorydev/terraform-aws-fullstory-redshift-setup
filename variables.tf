@@ -61,10 +61,5 @@ variable "workgroup_arn" {
   type        = string
   description = "The ARN of the Redshift Serverless workgroup. Required if you are using Redshift Serverless."
   default     = ""
-
-  validation {
-    condition     = var.is_serverless && var.workgroup_arn == ""
-    error_message = "workgroup_arn is required when is_serverless=true"
-  }
 }
 
