@@ -14,10 +14,10 @@ variable "cluster_identifier" {
   default     = ""
 }
 
-variable "fullstory_cidr_ipv4" {
-  type        = string
+variable "fullstory_cidr_ipv4s" {
+  type        = list(string)
   description = "The CIDR block that Fullstory will use to connect to the Redshift cluster."
-  default     = ""
+  default     = []
 }
 
 variable "fullstory_google_audience" {
