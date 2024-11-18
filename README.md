@@ -25,7 +25,7 @@ This module creates all the proper policies, roles and S3 buckets so that Fullst
 | <a name="input_fullstory_cidr_ipv4s"></a> [fullstory\_cidr\_ipv4s](#input\_fullstory\_cidr\_ipv4s) | The CIDR block that Fullstory will use to connect to the Redshift cluster. | `list(string)` | `[]` | no |
 | <a name="input_fullstory_data_center"></a> [fullstory\_data\_center](#input\_fullstory\_data\_center) | The data center where your Fullstory account is hosted. Either 'NA1' or 'EU1'. See https://help.fullstory.com/hc/en-us/articles/8901113940375-Fullstory-Data-Residency for more information. | `string` | `"NA1"` | no |
 | <a name="input_fullstory_google_audience"></a> [fullstory\_google\_audience](#input\_fullstory\_google\_audience) | The Google audience identifier that Fullstory will use to assume the role in order to call AWS APIs | `string` | `""` | no |
-| <a name="input_is_serverless"></a> [is\_serverless](#input\_is\_serverless) | Whether the Redshift cluster is serverless or not. | `bool` | n/a | yes |
+| <a name="input_is_serverless"></a> [is\_serverless](#input\_is\_serverless) | Whether the Redshift cluster is serverless or not. If true, workgroup\_arn is required. If false, database\_arn is required. | `bool` | n/a | yes |
 | <a name="input_port"></a> [port](#input\_port) | The port number where the Redshift cluster is listening. | `number` | `5439` | no |
 | <a name="input_s3_bucket_name"></a> [s3\_bucket\_name](#input\_s3\_bucket\_name) | The name of the S3 bucket where the Fullstory bundles are stored. | `string` | n/a | yes |
 | <a name="input_vpc_id"></a> [vpc\_id](#input\_vpc\_id) | The VPC ID where the Redshift cluster or Redshift Serverless workgroup is deployed. | `string` | n/a | yes |
