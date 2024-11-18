@@ -3,6 +3,16 @@ locals {
   fullstory_google_audience = var.fullstory_google_audience != "" ? var.fullstory_google_audience : (var.fullstory_data_center == "EU1" ? "107589159240321051166" : "116984388253902328461")
 }
 
+resource "validation_error" "is_serverless_workgroup_arn" {
+  condition = var.is_serverless && var.workgroup_arn == ""
+  summary   = "workgroup_arn is required when is_serverless=true"
+}
+
+resource "validation_error" "is_serverless_database_arn" {
+  condition = !var.is_serverless && var.database_arn == ""
+  summary   = "database_arn is required when is_serverless=true"
+}
+
 data "aws_vpc" "main" {
   id = var.vpc_id
 }

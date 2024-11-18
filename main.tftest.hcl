@@ -19,3 +19,18 @@ run "valid_serverless_minimal_details" {
     error_message = "default oauth id is wrong"
   }
 }
+
+run "serverless_no_workgroup_arn" {
+  command = plan
+
+  variables {
+    vpc_id         = "my-vpc"
+    s3_bucket_name = "my-bucket"
+    is_serverless  = true
+  }
+
+  assert {
+    condition     = validation_error.is_serverless_workgroup_arn
+    error_message = "workgroup_arn is required when is_serverless=true"
+  }
+}
