@@ -7,6 +7,7 @@ run "valid_serverless_minimal_details" {
     vpc_id         = "my-vpc"
     workgroup_arn  = "workgroup_arn"
     s3_bucket_name = "my-bucket"
+    is_serverless  = true
   }
 
   assert {
