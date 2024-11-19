@@ -8,7 +8,7 @@ data "aws_vpc" "main" {
 }
 
 resource "aws_security_group" "allow_fullstory_ips" {
-  name        = "fullstory-allow-fullstory-ips"
+  name        = "${var.prefix}-allow-fullstory-ips"
   description = "Allow Redshift traffic from Fullstory IPs"
   vpc_id      = var.vpc_id
 }
@@ -23,7 +23,7 @@ resource "aws_vpc_security_group_ingress_rule" "allow_fullstory_ips" {
 }
 
 resource "aws_iam_role" "main" {
-  name = "fullstory_redshift_setup"
+  name = "${var.prefix}_redshift_setup"
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
@@ -79,8 +79,10 @@ resource "aws_s3_bucket_policy" "main" {
 }
 
 module "redshift_serverless" {
-  count         = var.is_serverless ? 1 : 0
-  source        = "./modules/serverless"
+  count  = var.is_serverless ? 1 : 0
+  source = "./modules/serverless"
+
+  prefix        = var.prefix
   workgroup_arn = var.workgroup_arn
   role_name     = aws_iam_role.main.name
 }
@@ -90,5 +92,6 @@ module "redshift_provisioned" {
   source             = "./modules/provisioned"
   cluster_identifier = var.cluster_identifier
   database_arn       = var.database_arn
+  prefix             = var.prefix
   role_name          = aws_iam_role.main.name
 }

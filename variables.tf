@@ -47,6 +47,12 @@ variable "port" {
   default     = 5439
 }
 
+variable "prefix" {
+  type        = string
+  description = "The prefix to use for the resources created by this module."
+  default     = "fullstory"
+}
+
 variable "s3_bucket_name" {
   type        = string
   description = "The name of the S3 bucket where the Fullstory bundles are stored."
