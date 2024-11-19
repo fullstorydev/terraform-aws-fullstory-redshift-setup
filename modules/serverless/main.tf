@@ -1,5 +1,5 @@
 resource "aws_iam_policy" "main" {
-  name        = "fullstory_get_credentials"
+  name        = "${var.prefix}_get_credentials"
   path        = "/"
   description = "Allows Fullstory to get credentials to the Redshift Serverless workgroup"
   policy = jsonencode({

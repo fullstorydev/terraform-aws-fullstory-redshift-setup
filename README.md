@@ -27,6 +27,7 @@ This module creates all the proper policies, roles and S3 buckets so that Fullst
 | <a name="input_fullstory_google_audience"></a> [fullstory\_google\_audience](#input\_fullstory\_google\_audience) | The Google audience identifier that Fullstory will use to assume the role in order to call AWS APIs | `string` | `""` | no |
 | <a name="input_is_serverless"></a> [is\_serverless](#input\_is\_serverless) | Whether the Redshift cluster is serverless or not. If true, workgroup\_arn is required. If false, database\_arn is required. | `bool` | n/a | yes |
 | <a name="input_port"></a> [port](#input\_port) | The port number where the Redshift cluster is listening. | `number` | `5439` | no |
+| <a name="input_prefix"></a> [prefix](#input\_prefix) | The prefix to use for the resources created by this module. | `string` | `"fullstory"` | no |
 | <a name="input_s3_bucket_name"></a> [s3\_bucket\_name](#input\_s3\_bucket\_name) | The name of the S3 bucket where the Fullstory bundles are stored. | `string` | n/a | yes |
 | <a name="input_vpc_id"></a> [vpc\_id](#input\_vpc\_id) | The VPC ID where the Redshift cluster or Redshift Serverless workgroup is deployed. | `string` | n/a | yes |
 | <a name="input_workgroup_arn"></a> [workgroup\_arn](#input\_workgroup\_arn) | The ARN of the Redshift Serverless workgroup. Required if you are using Redshift Serverless. | `string` | `""` | no |
