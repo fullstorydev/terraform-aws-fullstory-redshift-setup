@@ -7,7 +7,7 @@ data "aws_vpc" "main" {
 }
 
 resource "aws_iam_role" "main" {
-  name = "${var.prefix}_redshift_setup"
+  name = "${replace(var.prefix, "-", "_")}_redshift_setup"
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
