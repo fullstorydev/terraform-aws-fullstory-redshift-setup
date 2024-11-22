@@ -4,10 +4,16 @@ run "valid_serverless_minimal_details" {
   command = plan
 
   variables {
+    prefix         = "my-prefix"
     vpc_id         = "my-vpc"
     workgroup_arn  = "workgroup_arn"
     s3_bucket_name = "my-bucket"
     is_serverless  = true
+  }
+
+  assert {
+    condition     = aws_iam_role.main.name == "my_prefix_redshift_setup"
+    error_message = "role name is wrong"
   }
 
   assert {
