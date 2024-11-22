@@ -1,25 +1,9 @@
 locals {
-  fullstory_cidr_ipv4s      = length(var.fullstory_cidr_ipv4s) > 0 ? var.fullstory_cidr_ipv4s : (var.fullstory_data_center == "EU1" ? ["34.89.210.80/29"] : ["8.35.195.0/29"])
   fullstory_google_audience = var.fullstory_google_audience != "" ? var.fullstory_google_audience : (var.fullstory_data_center == "EU1" ? "107589159240321051166" : "116984388253902328461")
 }
 
 data "aws_vpc" "main" {
   id = var.vpc_id
-}
-
-resource "aws_security_group" "allow_fullstory_ips" {
-  name        = "${var.prefix}-allow-fullstory-ips"
-  description = "Allow Redshift traffic from Fullstory IPs"
-  vpc_id      = var.vpc_id
-}
-
-resource "aws_vpc_security_group_ingress_rule" "allow_fullstory_ips" {
-  count             = length(local.fullstory_cidr_ipv4s)
-  security_group_id = aws_security_group.allow_fullstory_ips.id
-  cidr_ipv4         = local.fullstory_cidr_ipv4s[count.index]
-  ip_protocol       = "tcp"
-  from_port         = var.port
-  to_port           = var.port
 }
 
 resource "aws_iam_role" "main" {
