@@ -14,12 +14,6 @@ variable "cluster_identifier" {
   default     = ""
 }
 
-variable "fullstory_cidr_ipv4s" {
-  type        = list(string)
-  description = "The CIDR block that Fullstory will use to connect to the Redshift cluster."
-  default     = []
-}
-
 variable "fullstory_google_audience" {
   type        = string
   description = "The Google audience identifier that Fullstory will use to assume the role in order to call AWS APIs"
